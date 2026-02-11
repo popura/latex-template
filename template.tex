@@ -1,0 +1,97 @@
+\documentclass[a4j,twocolumn,dvipdfmx]{jsarticle}
+\usepackage[top=10truemm,bottom=10truemm,left=10truemm,right=10truemm]{geometry}
+\usepackage{titlesec}
+\titleformat*{\section}{\large\bfseries}
+\titleformat*{\subsection}{\bfseries}
+\input{preamble/preamble_ja.tex}
+
+\title{タイトル}
+\author{著者}
+
+\begin{document}
+\maketitle
+
+\section{はじめに}
+本文はこのようにベタ書きします．
+texファイル中の改行は，PDFファイルには反映されません．
+texファイルの編集しやすさを考えると，1文ごとに改行すると良いでしょう．
+texファイル中で改行したくないけど，PDFファイル中では改行したい場合には，バックスラッシュを2回入力します．
+
+段落を分けるには，texファイル中の段落を分けたいところに空行を入れます．
+texファイル中では\%を使ってコメントを書くことができます．
+%このようにコメントをかけます．この行はPDFファイルには表示されません．
+
+\section{数式の書き方}
+本文中で$y=ax$のように数式を書くには，\$で数式にしたい部分を囲みます．
+行を分けて数式を書くには，
+\begin{equation}
+  \hat{x}(\omega) = \int_{-\infty}^{\infty} x(t) e^{-j\omega t} \, dt
+  \label{eq:fourier}
+\end{equation}
+のようにします．
+式にラベルを付けておくと\cref{eq:fourier}のように，本文中で参照できます．
+基本的にはすべての式にラベルをつけると良いでしょう．
+
+\section{図の書き方}
+図を挿入するには，figure環境を使います．
+figure環境を使って挿入した図を\cref{fig:normal}に示します．
+\begin{figure}[b]
+  \centering
+  \includegraphics[width=\columnwidth]{./figs/small1.pdf}
+  \caption{図のキャプションはここに書きます \label{fig:normal}}
+\end{figure}
+
+本文が2段組みの場合，挿入される図も段の幅に合わせて配置されます．
+しかし，大きい図を挿入する場合には，ページの幅いっぱいを使いたいことがあります．
+そのような場合にはfigure*環境を使い，\cref{fig:big}のように挿入します．
+\begin{figure*}[t]
+  \centering
+  \includegraphics[width=\hsize]{./figs/big.pdf}
+  \caption{図のキャプションはここに書きます \label{fig:big}}
+\end{figure*}
+本文で参照する位置と図の位置が離れてしまうことがありますが，特に問題はありません．
+配置は基本的にLaTeXに任せましょう．
+
+複数の小さな図をまとめて1つの図としたいことがあります．
+そのような場合にはsubcaptionパッケージを使って\cref{fig:subcaption}のようにします．
+\begin{figure}[t]
+  \centering
+  \begin{subfigure}[t]{0.47\hsize}
+    \centering
+    \includegraphics[width=\columnwidth]{./figs/small1.pdf}
+    \caption{小さい図のキャプション \label{fig:small1}}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.47\hsize}
+    \centering
+    \includegraphics[width=\columnwidth]{./figs/small2.pdf}
+    \caption{小さい図のキャプション \label{fig:small2}}
+  \end{subfigure}
+  \caption{複数の小さい図をまとめて1つにする\label{fig:subcaption}}
+\end{figure}
+
+\section{表の書き方}
+表を書くにはtable環境を使います．
+表の例を\cref{tab:table}に示します．
+\begin{table}[t]
+  \centering
+  \caption{表のキャプションは上に書きます \label{tab:table}}
+  \begin{tabular}{l|cc} \hline\hline
+  地点 & 気温 & 湿度 \\ \hline
+  東京 & 20 & 60 \\
+  大阪 & 30 & 100 \\ \hline
+  平均 & 25 & 80 \\ \hline\hline
+  \end{tabular}
+\end{table}
+日本人は表を書くときに線をたくさん書きがちですが，論文では線が少ない表が好まれます．
+特に縦線はあまり多く書きません．
+
+\section{参考文献}
+参考文献はbibtexを使って管理するのが便利です．
+bibtexは，bibファイルに参考文献の情報をまとめておくと，
+本文中で\textbackslash cite\{参考文献のラベル\}と書くだけで参考文献を参照できるようになります．
+例えば，文献\cite{conference1}と文献\cite{journal1}を参照してみます．
+
+\bibliographystyle{IEEEtran}
+\bibliography{references.bib}
+
+\end{document}
